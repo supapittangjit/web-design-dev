@@ -5,3 +5,11 @@ body {
 .container {
     background-color: aqua;
 }
+
+#bb1 {
+    background-color: aquamarine;
+}
+
+#bb2 {
+    background-color: rgb(12, 14, 13);
+}
