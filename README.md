@@ -17,6 +17,7 @@ Member <b>(Group07 : sec02)</b>
 3. ถ้าฟังก์ชั่นหนึ่งของตัวเองเสร็จแล้วให้อัปขึ้น branch ตัวเองให้เรียบร้อย แล้ว pull request ไปที่ branch staging ก่อนขึ้น main  
 
 4. ถ้า Request มาแล้ว ให้อัปเดตใน Trello ลากการ์ด ของตัวเองไปในช่อง Code Review ก่อน  
+5. เราจะเช็คความเรียบร้อยกันที่ branch staging ก่อนจะนำขึ้น branch main 
 
 
 
