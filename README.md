@@ -1,9 +1,9 @@
 # web-design-dev
-for Website Design and Development Subject 06016346 Project 2021  
-Member  
+06016346 Website Design and Development Subject Project 2021  
+Member (Group07 : sec02)  
 นายชินพัฒน์ เทาทองสุข 62070047  
-นายอสมา กล้าการขาย 62070220  
 นางสาวศุภาพิชญ์ ตั้งจิตต์ 62070188  
+นายอสมา กล้าการขาย 62070220   
 -------------------------------------------------------------------------------------------------------------  
 ถ้าต้องการ commit file ขึ้นมา ให้ new file ในโปรเจค และ commit file นั้นใน branch ของตัวเอง  
 ปล.1 new brance เป็นชื่อ function / ส่วนที่ตัวเองทำ เวลาทำก็อัปขึ้น branch ตัวเองไปก่อน  
