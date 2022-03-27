@@ -26,18 +26,20 @@
         <button id="signInWithGoogle" type="click" class="btn btn-light btn-outline-primary logged-out"><i
             class="bi bi-google"></i> Sign In</button>
         <span>
-          <span id="user-profile-name" class="display-name" style="color: white;"></span>
+          <img id="user-pic" class="display-pic logged-in" style="width:10%; border-radius: 50%;">
+          <span id="user-profile-name" class="display-name logged-in" style="color: white;"></span>
         </span>
-        <button hidden id="btnLogout" class="btn btn-primary btn-outline-light logged-in" type="button">
+        <button id="btnLogout" class="btn btn-primary btn-outline-light logged-in" type="button" style="display: none;">
           <i class="bi bi-box-arrow-right"> Logout</i>
         </button>
       </nav>
     </div>
   </nav>
+
   <h1 class="display-1 text-center">Blind-Tac-Tic</h1>
 
   <!-- Homepage -->
-  <div id="container-homepage" class="container">
+  <div id="container-homepage" class="container logged-in">
     <div class="d-inline">
       <button id="btn-create-room" type="button" class="btn btn-success">Create Room</button>
       <button id="btn-goto-lobby" type="button" class="btn btn-primary">Join Lobby</button>
@@ -60,6 +62,7 @@
   <!-- Lobby -->
   <div id="container-lobby" class="container mt-2 mb-2">
     <button type="button" class="btn btn-danger btn-leave-lobby">Leave Lobby</button>
+    <!-- <button type="button" class="btn btn-outline-warning" id="btn-refresh-room-list">Refresh</button> -->
     <!-- show list of room -->
     <table class="table table-light">
 
@@ -92,6 +95,26 @@
       <!-- sample row -->
 
     </table>
+    <div class="modal" id="modal-join-private" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-join-private-title">Join Private Room : </h5>
+            <button type="button" class="btn-close btn-cancel" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="join-private-room-form" action="" class="">
+            <div class="modal-body mb-3">
+              <input id="join-private-room-input" type="text" class="form-control" placeholder="Enter Room Code"
+                required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Join</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- Lobby -->
 
@@ -107,10 +130,11 @@
     </div>
     <div>
       <h5 id="room-id">Room ID :</h5>
+      <button type="button" id="btn-copyCode" class="btn btn-outline-primary" disabled="true">COPY CODE</button>
     </div>
 
     <!-- Room Type Radio Selecter -->
-    <div>
+    <div id="radioChangeRoomType">
       <h5>Room Type : </h5>
       <div class="form-check d-inline-block col-2">
         <input class="form-check-input" type="radio" name="RoomType" id="public">
@@ -129,11 +153,17 @@
     <!-- Show Player In Room -->
     <div class="d-block">
       <div class="player-slot border d-block m-1 p-1 row">
-        <div class="player-name d-inline col-6" id="player-1-name">Name : </div>
+        <img class="" alt="player1photo" id="player-1-photo" src="default-user-photo.jpg"
+          style="width:10%; border-radius: 50%;">
+        <div class=" player-name d-inline col-6" id="player-1-name">Name :
+        </div>
         <div class="player-status d-inline col-6" id="player-1-status">Status : </div>
       </div>
       <div class="player-slot border d-inline d-block m-1 p-1 row">
-        <div class="player-name d-inline col-6" id="player-2-name">Name : </div>
+        <img class="" alt="player2photo" id="player-2-photo" src="default-user-photo.jpg"
+          style="width:10%; border-radius: 50%;">
+        <div class=" player-name d-inline col-6" id="player-2-name">Name :
+        </div>
         <div class="player-status d-inline col-6" id="player-2-status">Status : </div>
       </div>
     </div>
@@ -261,7 +291,7 @@
 
   <!-- custom scr -->
   <script type="text/javascript" src="game.js"></script>
-
+  <script type="text/javascript" src="auth.js"></script>
 </body>
 
 </h>
