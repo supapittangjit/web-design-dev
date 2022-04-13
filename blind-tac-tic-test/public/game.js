@@ -1566,34 +1566,40 @@ var P2_UID = '';
 function give_reward(roomNum, result) {
     // result = { 'P1-win' , 'P2-win' , 'P1-surrender' , 'P2-surrender' , 'draw' }
     ref_userProfile.once('value', userData => {
+        ref_userProfile.child(P1_UID).update({
+            ['total-play']: userData.child(P1_UID).child('total-play').val() + 1,
+        });
+        ref_userProfile.child(P2_UID).update({
+            ['total-play']: userData.child(P2_UID).child('total-play').val() + 1,
+        });
         if (result == 'P1-win') {
-            console.log(userData.child(P1_UID).child('score').val() + '+ 2');
+            console.log(userData.child(P1_UID).child('score').val() + '+ 1');
             ref_userProfile.child(P1_UID).update({
-                ['score']: userData.child(P1_UID).child('score').val() + 2,
+                ['win']: userData.child(P1_UID).child('score').val() + 1,
             });
         } else if (result == 'P2-win') {
-            console.log(userData.child(P2_UID).child('score').val() + '+ 2');
+            console.log(userData.child(P2_UID).child('score').val() + '+ 1');
             ref_userProfile.child(P2_UID).update({
-                ['score']: userData.child(P2_UID).child('score').val() + 2,
+                ['win']: userData.child(P2_UID).child('score').val() + 1,
             });
         } else if (result == 'P1-surrender') {
             console.log(userData.child(P2_UID).child('score').val() + '+ 1');
             ref_userProfile.child(P2_UID).update({
-                ['score']: userData.child(P2_UID).child('score').val() + 1,
+                ['win']: userData.child(P2_UID).child('score').val() + 1,
             });
         } else if (result == 'P2-surrender') {
             console.log(userData.child(P1_UID).child('score').val() + '+ 1');
             ref_userProfile.child(P1_UID).update({
-                ['score']: userData.child(P1_UID).child('score').val() + 1,
+                ['win']: userData.child(P1_UID).child('score').val() + 1,
             });
         } else if (result == 'draw') {
             console.log(userData.child(P1_UID).child('score').val() + '+ 1');
             ref_userProfile.child(P1_UID).update({
-                ['score']: userData.child(P1_UID).child('score').val() + 1,
+                ['draw']: userData.child(P1_UID).child('score').val() + 1,
             });
             console.log(userData.child(P2_UID).child('score').val() + '+ 1');
             ref_userProfile.child(P2_UID).update({
-                ['score']: userData.child(P2_UID).child('score').val() + 1,
+                ['draw']: userData.child(P2_UID).child('score').val() + 1,
             });
         }
     });
@@ -1612,9 +1618,11 @@ firebase.auth().onAuthStateChanged((user) => {
             ['LastLogInDate']: todayDate,
         });
         ref_userProfile.once('value', userData => {
-            if (!userData.child(user.uid).child('score').exists()) {
+            if (!userData.child(user.uid).child('total-play').exists()) {
                 ref_userProfile.child(user.uid).update({
-                    ['score']: 0,
+                    ['total-play']: 0,
+                    ['win']: 0,
+                    ['draw']: 0,
                 });
             }
         });
