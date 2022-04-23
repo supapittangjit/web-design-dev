@@ -46,6 +46,8 @@ function Open_homepage() {
     Close_lobby();
     Close_room();
     Close_game_table();
+    Close_ranking();
+    Close_howtoplay();
     join_room_num = '0';
     host_room_Num = '0';
 }
@@ -62,6 +64,8 @@ function Open_lobby() {
     Close_homepage();
     Close_room();
     Close_game_table();
+    Close_ranking();
+    Close_howtoplay();
 }
 
 function Close_room() {
@@ -79,6 +83,8 @@ function Open_room() {
     Close_homepage();
     Close_lobby();
     Close_game_table();
+    Close_ranking();
+    Close_howtoplay();
 }
 
 function Close_game_table() {
@@ -96,6 +102,38 @@ function Open_game_table() {
     Close_homepage();
     Close_lobby();
     Close_room();
+    Close_ranking();
+    Close_howtoplay();
+}
+
+function Open_ranking(){
+    Close_homepage();
+    Close_lobby();
+    Close_room();
+    Close_game_table();
+    Close_howtoplay();
+    const container_ranking = document.getElementById('container-ranking');
+    container_ranking.style.display = 'block';
+}
+
+function Close_ranking(){
+    const container_ranking = document.getElementById('container-ranking');
+    container_ranking.style.display = 'none';
+}
+
+function Open_howtoplay(){
+    Close_homepage();
+    Close_lobby();
+    Close_room();
+    Close_game_table();
+    Close_ranking();
+    const container_howtoplay = document.getElementById('container-howtoplay');
+    container_howtoplay.style.display = 'block';
+}
+
+function Close_howtoplay(){
+    const container_howtoplay = document.getElementById('container-howtoplay');
+    container_howtoplay.style.display = 'none';
 }
 
 // create room
@@ -237,6 +275,7 @@ function joinRoom(room_Num) {
             document.getElementById('room-num').innerText = "Room Number : " + snapshot.child('RoomNum').val();
             document.getElementById('room-id').innerText = "Room ID : " + snapshot.child('RoomID').val();
         });
+        set_gameUI_to_Blue();
         // set player 2 info (yourself)
         document.getElementById('player-2-photo').src = userPhoto;
         document.getElementById('player-2-name').innerText = "Name : " + userName;
@@ -376,6 +415,7 @@ function joinRoomWithCode() {
             document.getElementById('room-num').innerText = "Room Number : " + snapshot.child('RoomNum').val();
             document.getElementById('room-id').innerText = "Room ID : " + snapshot.child('RoomID').val();
         });
+        set_gameUI_to_Blue();
         // set player 2 info (yourself)
         document.getElementById('player-2-photo').src = userPhoto;
         document.getElementById('player-2-name').innerText = "Name : " + userName;
@@ -461,6 +501,7 @@ function hostJoinRoom(room_Num) {
         ['Player_1_Status']: "Ready",
         ['Player_1_UID']: userUID,
     });
+    set_gameUI_to_Red();
     ref_gameRoom.child(room_Num).on('value', snapshot => {
         let room_type = snapshot.child('RoomType').val();
         document.getElementById(room_type).checked = true;
@@ -591,6 +632,22 @@ function copyTextToClipboard(event) {
     ref_gameRoom.child(host_room_Num).once('value', snapshot => {
         navigator.clipboard.writeText(snapshot.child('RoomID').val());
     });
+}
+
+function set_gameUI_to_Red(){
+    document.getElementById('img-x').src = URL_x_symbol_1;
+    document.getElementById('img-o').src = URL_o_symbol_1;
+    document.getElementById('img-tri').src = URL_triangle_symbol_1;
+    document.getElementById('img-unblind').src = URL_unblind_1;
+    document.getElementById('img-protect').src = URL_protect_1;
+}
+
+function set_gameUI_to_Blue(){
+    document.getElementById('img-x').src = URL_x_symbol_2;
+    document.getElementById('img-o').src = URL_o_symbol_2;
+    document.getElementById('img-tri').src = URL_triangle_symbol_2;
+    document.getElementById('img-unblind').src = URL_unblind_2;
+    document.getElementById('img-protect').src = URL_protect_2;
 }
 
 
@@ -1606,6 +1663,20 @@ function give_reward(roomNum, result) {
 
 }
 
+//How to Play Page
+const btn_howtoplay = document.getElementById('btn-howtoplay');
+btn_howtoplay.addEventListener('click', howtoplay);
+function howtoplay(){
+    Open_howtoplay();
+}
+
+//Ranking Page
+const btn_ranking = document.getElementById('btn-ranking');
+btn_ranking.addEventListener('click', ranking);
+function ranking(){
+    Open_ranking();
+}
+
 // set user value
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -1662,3 +1733,4 @@ function checkBeforeLeave(e) {
     e.returnValue = '';
     Open_homepage();
 }
+
