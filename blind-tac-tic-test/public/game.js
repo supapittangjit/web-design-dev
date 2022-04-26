@@ -42,7 +42,7 @@ function Close_homepage() {
 
 function Open_homepage() {
     const homepage = document.getElementById('container-homepage');
-    homepage.style.display = 'block';
+    homepage.style.display = 'flex';
     Close_lobby();
     Close_room();
     Close_game_table();
@@ -106,7 +106,7 @@ function Open_game_table() {
     Close_howtoplay();
 }
 
-function Open_ranking(){
+function Open_ranking() {
     Close_homepage();
     Close_lobby();
     Close_room();
@@ -116,12 +116,12 @@ function Open_ranking(){
     container_ranking.style.display = 'block';
 }
 
-function Close_ranking(){
+function Close_ranking() {
     const container_ranking = document.getElementById('container-ranking');
     container_ranking.style.display = 'none';
 }
 
-function Open_howtoplay(){
+function Open_howtoplay() {
     Close_homepage();
     Close_lobby();
     Close_room();
@@ -131,7 +131,7 @@ function Open_howtoplay(){
     container_howtoplay.style.display = 'block';
 }
 
-function Close_howtoplay(){
+function Close_howtoplay() {
     const container_howtoplay = document.getElementById('container-howtoplay');
     container_howtoplay.style.display = 'none';
 }
@@ -171,7 +171,7 @@ function createRoom(event) {
 
 // random id for ID room
 function guidGenerator() {
-    var S4 = function () {
+    var S4 = function() {
         return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     };
     return (S4() + S4());
@@ -246,10 +246,11 @@ function readRoomList() {
 // Join Room
 // Join Room from lobby
 var isRoomFull = false;
+
 function check_P2_space(event) {
     const room_Num = event.currentTarget.getAttribute('id');
     ref_gameRoom.child(room_Num).once('value', snapshot => {
-        if(snapshot.child('Player').child('Player_2_Name').exists()){
+        if (snapshot.child('Player').child('Player_2_Name').exists()) {
             isRoomFull = true;
         }
     });
@@ -531,7 +532,7 @@ function hostJoinRoom(room_Num) {
                 }
 
                 if (snapshot.child('Player').child('Player_1_Status').val() == 'Ready' && snapshot.child('Player').child('Player_2_Status').val() == 'Ready') {
-                    const changestatewithdelay = async () => {
+                    const changestatewithdelay = async() => {
                         ref_gameRoom.child(room_Num).child('Surrender').remove();
                         ref_gameRoom.child(host_room_Num).child('table').remove();
                         btn_leaveRooms.forEach((btn) => {
@@ -554,7 +555,7 @@ function hostJoinRoom(room_Num) {
                 btnStartGame.disabled = false;
             } else if (snapshot.child('RoomStatus').val() == 'CREATED') {
                 if (snapshot.child('Player').child('Player_1_Status').val() == 'Ready' && snapshot.child('Player').child('Player_2_Status').val() == 'Ready') {
-                    const changestatewithdelay = async () => {
+                    const changestatewithdelay = async() => {
                         ref_gameRoom.child(room_Num).child('Surrender').remove();
                         await delay(1000);
                         console.log("Waited 1s");
@@ -606,7 +607,7 @@ function hostJoinRoom(room_Num) {
             btn_returnHome.disabled = false;
             btn_returnRoom.disabled = false;
             if (snapshot.child('Player').child('Player_1_Status').val() == 'Ready' && snapshot.child('Player').child('Player_2_Status').val() == 'Ready') {
-                const changestatewithdelay = async () => {
+                const changestatewithdelay = async() => {
                     await delay(1000);
                     console.log("Waited 1s");
                     ref_gameRoom.child(room_Num).update({
@@ -634,7 +635,7 @@ function copyTextToClipboard(event) {
     });
 }
 
-function set_gameUI_to_Red(){
+function set_gameUI_to_Red() {
     document.getElementById('img-x').src = URL_x_symbol_1;
     document.getElementById('img-o').src = URL_o_symbol_1;
     document.getElementById('img-tri').src = URL_triangle_symbol_1;
@@ -642,7 +643,7 @@ function set_gameUI_to_Red(){
     document.getElementById('img-protect').src = URL_protect_1;
 }
 
-function set_gameUI_to_Blue(){
+function set_gameUI_to_Blue() {
     document.getElementById('img-x').src = URL_x_symbol_2;
     document.getElementById('img-o').src = URL_o_symbol_2;
     document.getElementById('img-tri').src = URL_triangle_symbol_2;
@@ -1666,14 +1667,16 @@ function give_reward(roomNum, result) {
 //How to Play Page
 const btn_howtoplay = document.getElementById('btn-howtoplay');
 btn_howtoplay.addEventListener('click', howtoplay);
-function howtoplay(){
+
+function howtoplay() {
     Open_howtoplay();
 }
 
 //Ranking Page
 const btn_ranking = document.getElementById('btn-ranking');
 btn_ranking.addEventListener('click', ranking);
-function ranking(){
+
+function ranking() {
     Open_ranking();
 }
 
@@ -1733,4 +1736,3 @@ function checkBeforeLeave(e) {
     e.returnValue = '';
     Open_homepage();
 }
-

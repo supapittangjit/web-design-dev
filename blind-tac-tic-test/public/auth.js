@@ -1,17 +1,17 @@
 const signInWithGoogleButton = document.getElementById('signInWithGoogle');
 const auth = firebase.auth();
 
-function signInWithGoogle (){
+function signInWithGoogle() {
     const googleProvider = new firebase.auth.GoogleAuthProvider();
 
     auth.signInWithPopup(googleProvider)
-    .then((result) => {
-        var user = result.user;  
-        console.log(user);
-    })
-    .catch(error => {
-        console.error(error);
-    })
+        .then((result) => {
+            var user = result.user;
+            console.log(user);
+        })
+        .catch(error => {
+            console.error(error);
+        })
 }
 signInWithGoogleButton.addEventListener("click", signInWithGoogle);
 
@@ -36,13 +36,12 @@ function setupUI(user) {
         document.querySelector('#user-pic').src = user.photoURL;
         document.querySelector('#user-profile-name').style.display = 'inline-block';
         document.querySelector('#user-pic').style.display = 'inline-block';
-        loginItems.forEach(item => item.style.display = 'inline-block');
+        loginItems.forEach(item => item.style.display = 'inline-flex');
         logoutItems.forEach(item => item.style.display = 'none');
-    }
-     else {
+    } else {
         document.querySelector('#user-profile-name').style.display = 'none';
         document.querySelector('#user-pic').style.display = 'none';
         loginItems.forEach(item => item.style.display = 'none');
-        logoutItems.forEach(item => item.style.display = 'inline-block');
+        logoutItems.forEach(item => item.style.display = 'flex');
     }
 }
