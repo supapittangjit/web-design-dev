@@ -5,10 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style/colors_bt5.css">
+    <link rel="stylesheet" href="../blind-tac-tic-test/public/style/colors_bt5.css">
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <title>Play</title>
 </head>
 
@@ -41,196 +46,260 @@
         </div>
     </nav>
     <div class="container">
-        <main>
-            <div class="row justify-content-center" style="color: aliceblue;">
-                <div class="col-12">
-                    <div id="container-game-table" class="container mt-2 mb-2">
-                        <div class="border d-inline-block d-flex justify-content-center">
-                            <div class="d-inline p-2" id="text-game-result"></div>
-                            <div class="d-inline p-2" id="text-turn-number">Turn : </div>
-                            <div class="d-inline p-2" id="text-turn-side">Player : </div>
-                        </div>
-                    </div>
+                <!-- Game Table -->
+                <div class="row justify-content-center" style="color: aliceblue;" id="container-game-table">
                     <div class="col-12">
-                        <div class="row g-5">
-                            <div class="col-lg-2 col-md-2 col-sm-6">
-                                <div class="row">
-                                    <div id="btn-symbol-selecter-group row" class="d-block justify-content-center">
-                                        <!-- Symbol -->
-                                        <!-- X -->
-                                        <div class="col-lg-12 col-md-12 col-sm-2">
+                        <div class="container mt-2 mb-2">
+                            <div class="border d-inline-block d-flex justify-content-center">
+                                <div class="d-inline p-2" id="text-game-result"></div>
+                                <div class="d-inline p-2" id="text-turn-number">Turn : </div>
+                                <div class="d-inline p-2" id="text-turn-side">Player : </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row g-5">
+                                <div class="col-lg-2 col-md-2 col-sm-6">
+                                    <div class="row">
+                                        
+                                        <div id="btn-symbol-selecter-group row" class="d-block justify-content-center col-12">
+                                            <!-- Symbol -->
+                                            <!-- X -->
                                             <div class="row">
-                                                <div class="col-lg-12 col-md-12 col-sm-2 ">
-                                                    <input type="radio " class="btn-symbol btn-check " name="selecter " value="x-symbol " id="btn-symbol-x " autocomplete="off " style="width:100%; height:180px; ">
-                                                    <label class=" btn btn-outline-primary " for="btn-symbol-x "><img src="https://i.ibb.co/5LfgmQM/vadim-bogulov-In9-Tha9-Hu4-unsplash-removebg-preview.png " alt="vadim-bogulov-In9-Tha9-Hu4-unsplash-removebg-preview
-                                            " class="img-fluid "></label></div>
+                                            <div class="col-lg-12 col-md-12 col-sm-4">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-2">
+                                                        <input type="radio" class="btn-symbol btn-check" name="selecter" value="x-symbol" id="btn-symbol-x" autocomplete="off" style="width:100%; height:180px;">
+                                                        <label class="btn btn-outline-primary" for="btn-symbol-x"><img
+                                                                id="img-x" src="https://i.imgur.com/4JmCiF3.png" alt="symbol-x"
+                                                                class="img-fluid"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- O -->
+                                            <div class="col-lg-12 col-md-12 col-sm-2">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-2">
+                                                        <input type="radio" class="btn-symbol btn-check" name="selecter" value="o-symbol" id="btn-symbol-o" autocomplete="off">
+                                                        <label class="btn btn-outline-primary" for="btn-symbol-o"> <img
+                                                                id="img-o" src="https://i.imgur.com/yCzPK1a.png" alt="symbol-o"
+                                                                class="img-fluid"> </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Tri-angle -->
+                                            <div class="col-lg-12 col-md-12 col-sm-2">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-2">
+                                                        <input type="radio" class="btn-symbol btn-check" name="selecter" value="triangle" id="btn-symbol-tri" autocomplete="off">
+                                                        <label class="btn btn-outline-primary" for="btn-symbol-tri"> <img
+                                                                id="img-tri" src="https://i.imgur.com/zronXRJ.png"
+                                                                alt="symbol-tri" class="img-fluid"> </label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <!-- O -->
-                                        <div class="col-lg-12 col-md-12 col-sm-2 ">
-                                            <div class="row ">
-                                                <div class="col-lg-12 col-md-12 col-sm-2 ">
-                                                    <input type="radio " class="btn-symbol btn-check " name="selecter " value="o-symbol " id="btn-symbol-o " autocomplete="off ">
-                                                    <label class="btn btn-outline-primary " for="btn-symbol-o "> <img src="https://i.ibb.co/5LfgmQM/vadim-bogulov-In9-Tha9-Hu4-unsplash-removebg-preview.png " alt="vadim-bogulov-In9-Tha9-Hu4-unsplash-removebg-preview
-                                            " class="img-fluid "> </label></div>
-                                            </div>
+                                    </div>
+                                    </div>
+                                </div>
+        
+                                <!-- Table -->
+                                <div class="col-8">
+                                    <div class="game-table m-3 d-inline-block align-top">
+                                        <div class="table-row row" id="row-1">
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-1-col-1" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-1-col-2" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-1-col-3" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-1-col-4" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-1-col-5" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
                                         </div>
-                                        <!-- Tri-angle -->
-                                        <div class="col-lg-12 col-md-12 col-sm-2 ">
-                                            <div class="row ">
-                                                <div class="col-lg-12 col-md-12 col-sm-2 ">
-                                                    <input type="radio " class="btn-symbol btn-check " name="selecter " value="triangle " id="btn-symbol-tri " autocomplete="off ">
-                                                    <label class="btn btn-outline-primary " for="btn-symbol-tri "> <img src="https://i.ibb.co/5LfgmQM/vadim-bogulov-In9-Tha9-Hu4-unsplash-removebg-preview.png " alt="vadim-bogulov-In9-Tha9-Hu4-unsplash-removebg-preview
-                                            " class="img-fluid "> </label></div>
-                                            </div>
+                                        <div class="table-row row" id="row-2">
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-2-col-1" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-2-col-2" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-2-col-3" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-2-col-4" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-2-col-5" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                        </div>
+                                        <div class="table-row row" id="row-3">
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-3-col-1" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-3-col-2" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-3-col-3" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-3-col-4" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-3-col-5" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                        </div>
+                                        <div class="table-row row" id="row-4">
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-4-col-1" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-4-col-2" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-4-col-3" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-4-col-4" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-4-col-5" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                        </div>
+                                        <div class="table-row row" id="row-5">
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-5-col-1" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-5-col-2" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-5-col-3" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-5-col-4" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
+                                            <button type="button" class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0" id="row-5-col-5" style="height: 10vw; width: 10vw;">
+                                                <img alt="picture-layer-symbol" class="col-layer-symbol"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                                <img alt="picture-layer-help" class="col-layer-help"
+                                                    src="https://i.imgur.com/w64M65K.png"></img>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <!-- Table -->
-                            <div class="col-8 ">
-                                <div class="game-table m-3 d-inline-block align-top ">
-                                    <div class="table-row row " id="row-1 ">
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-1-col-1 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-1-col-2 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-1-col-3 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-1-col-4 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-1-col-5 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                    </div>
-                                    <div class="table-row row " id="row-2 ">
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-2-col-1 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-2-col-2 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-2-col-3 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-2-col-4 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-2-col-5 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                    </div>
-                                    <div class="table-row row " id="row-3 ">
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-3-col-1 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-3-col-2 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-3-col-3 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-3-col-4 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-3-col-5 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                    </div>
-                                    <div class="table-row row " id="row-4 ">
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-4-col-1 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-4-col-2 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-4-col-3 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-4-col-4 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-4-col-5 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                    </div>
-                                    <div class="table-row row " id="row-5 ">
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-5-col-1 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-5-col-2 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-5-col-3 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-5-col-4 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
-                                        <button type="button " class="table-col col btn btn-light border justify-content-center align-items-center p-0 m-0 " id="row-5-col-5 " style="height: 10vw; width: 10vw; ">
-          <img alt="picture-layer-symbol " class="col-layer-symbol " src="https://i.imgur.com/w64M65K.png "></img>
-          <img alt="picture-layer-help " class="col-layer-help " src="https://i.imgur.com/w64M65K.png "></img>
-        </button>
+                                <div class="col-2">
+                                    <!-- Help Item -->
+                                    <div id="btn-help-item-selecter-group" class="d-block">
+                                        <!-- Help Type -->
+                                        <!-- Unblind -->
+                                        <input type="radio" class="btn-help-item btn-check" name="selecter" value="unblind" id="btn-help-item-unblind" autocomplete="off">
+                                        <label class="btn btn-outline-primary" for="btn-help-item-unblind"> <img
+                                                id="img-unblind" src="https://i.imgur.com/4rLOfNI.png" alt="unblind"
+                                                class="img-fluid"> </label>
+                                        <!-- Protect -->
+                                        <input type="radio" class="btn-help-item btn-check" name="selecter" value="protect" id="btn-help-item-protect" autocomplete="off">
+                                        <label class="btn btn-outline-primary" for="btn-help-item-protect"> <img
+                                                id="img-protect" src="https://i.imgur.com/WT4hrZe.png" alt="protect"
+                                                class="img-fluid"> </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-2 ">
-                                <!-- Help Item -->
-                                <div id="btn-help-item-selecter-group " class="d-block ">
-                                    <!-- Help Type -->
-                                    <!-- Unblind -->
-                                    <input type="radio " class="btn-help-item btn-check " name="selecter " value="unblind " id="btn-help-item-unblind " autocomplete="off ">
-                                    <label class="btn btn-outline-primary " for="btn-help-item-unblind "> <img src="https://i.ibb.co/5LfgmQM/vadim-bogulov-In9-Tha9-Hu4-unsplash-removebg-preview.png " alt="vadim-bogulov-In9-Tha9-Hu4-unsplash-removebg-preview
-                                            " class="img-fluid "> </label>
-                                    <!-- Protect -->
-                                    <input type="radio " class="btn-help-item btn-check " name="selecter " value="protect " id="btn-help-item-protect " autocomplete="off ">
-                                    <label class="btn btn-outline-primary " for="btn-help-item-protect "> <img src="https://i.ibb.co/5LfgmQM/vadim-bogulov-In9-Tha9-Hu4-unsplash-removebg-preview.png " alt="vadim-bogulov-In9-Tha9-Hu4-unsplash-removebg-preview
-                                            " class="img-fluid "> </label>
+                            <div class="row">
+                                <div class="col-12 d-flex justify-content-center align-items-center gap-5">
+                                    <button type="button" class="btn btn-danger d-inline" id="btn-table-surrender">
+                                        Surrender </button>
+                                    <button type="button" class="btn btn-light d-inline" id="btn-table-return-room">
+                                        Return Room </button>
+                                    <button type="button" class="btn btn-dark d-inline" id="btn-table-return-home">
+                                        Return Home </button>
                                 </div>
                             </div>
+        
+        
                         </div>
-                        <div class="row ">
-                            <div class="col-12 d-flex justify-content-center align-items-center gap-5 ">
-                                <button type="button " class="btn btn-danger d-inline " id="btn-table-surrender "> Surrender </button>
-                                <button type="button " class="btn btn-light d-inline " id="btn-table-return-room "> Return Room </button>
-                                <button type="button " class="btn btn-dark d-inline " id="btn-table-return-home "> Return Home </button>
-                            </div>
-                        </div>
-
-
                     </div>
                 </div>
-            </div>
-        </main>
+                <!-- /Game Table -->
     </div>
 </body>
 

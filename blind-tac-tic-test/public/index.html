@@ -183,7 +183,6 @@
 
         <!-- room -->
         <div class="row justify-content-center g-6 py-5" id="container-room">
-            <button type="button" class="btn btn-dark btn-leave-room">Leave Room</button>
             <div class="col-12">
                 <div class="row">
                     <div class="col-md-6 col-12">
@@ -191,7 +190,7 @@
                             aliceblue;">Room.</p>
                     </div>
                     <div class="col-md-6 col-12 d-flex justify-content-end align-items-center">
-
+                        <button type="button" class="btn btn-dark btn-leave-room">Leave Room</button>
                     </div>
                 </div>
             </div>
@@ -203,23 +202,28 @@
                 <div>
                     <h5 id="room-name">Room Name :</h5>
                 </div>
-                <div>
+                <div class="row">
+                    <div class="col-2">
                     <h5 id="room-id">Room ID :</h5>
-                    <button type="button" id="btn-copyCode" class="btn btn-outline-primary" disabled="true">COPY
-                        CODE</button>
+                </div>
+                <div class="col-3">
+                    <button type="button" id="btn-copyCode" class="btn btn-outline-light" disabled="true">COPY
+                        CODE</button></div>
                 </div>
 
-                <div id="radioChangeRoomType">
-                    <h5>Room Type </h5>
-                    <div class="form-check d-inline-block col-2">
+                <div id="radioChangeRoomType" class="row">
+                    <div class="col-2">
+                    <h5>Room Type :</h5>
+                </div>
+                    <div class="form-check d-inline-block col-1">
                         <input class="form-check-input" type="radio" name="RoomType" id="public">
-                        <label class="form-check-label" for="RoomType1">
+                        <label class="form-check-label" for="RoomType1" style="margin-right: auto;">
                             Public
                         </label>
                     </div>
-                    <div class="form-check d-inline-block col-2">
+                    <div class="form-check d-inline-block col-1">
                         <input class="form-check-input" type="radio" name="RoomType" id="private" checked>
-                        <label class="form-check-label" for="RoomType2">
+                        <label class="form-check-label" for="RoomType2" style="margin-right: auto;">
                             Private
                         </label>
                     </div>
@@ -240,7 +244,7 @@
                     </div>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-success" id="btn-start-game" disabled="true"> START GAME
+                    <button type="button" class="btn btn-light" id="btn-start-game" disabled="true"> START GAME
                     </button>
                 </div>
 
