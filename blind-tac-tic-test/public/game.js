@@ -48,6 +48,7 @@ function Open_homepage() {
     Close_game_table();
     Close_ranking();
     Close_howtoplay();
+    Close_userinfo();
     join_room_num = '0';
     host_room_Num = '0';
 }
@@ -66,6 +67,7 @@ function Open_lobby() {
     Close_game_table();
     Close_ranking();
     Close_howtoplay();
+    Close_userinfo();
 }
 
 function Close_room() {
@@ -85,6 +87,7 @@ function Open_room() {
     Close_game_table();
     Close_ranking();
     Close_howtoplay();
+    Close_userinfo();
 }
 
 function Close_game_table() {
@@ -104,6 +107,7 @@ function Open_game_table() {
     Close_room();
     Close_ranking();
     Close_howtoplay();
+    Close_userinfo();
 }
 
 function Open_ranking() {
@@ -112,6 +116,7 @@ function Open_ranking() {
     Close_room();
     Close_game_table();
     Close_howtoplay();
+    Close_userinfo();
     const container_ranking = document.getElementById('container-ranking');
     container_ranking.style.display = 'block';
 }
@@ -127,6 +132,7 @@ function Open_howtoplay() {
     Close_room();
     Close_game_table();
     Close_ranking();
+    Close_userinfo();
     const container_howtoplay = document.getElementById('container-howtoplay');
     container_howtoplay.style.display = 'block';
 }
@@ -134,6 +140,23 @@ function Open_howtoplay() {
 function Close_howtoplay() {
     const container_howtoplay = document.getElementById('container-howtoplay');
     container_howtoplay.style.display = 'none';
+}
+
+function Open_userinfo(){
+    Close_homepage();
+    Close_lobby();
+    Close_room();
+    Close_game_table();
+    Close_howtoplay();
+    const userinfo = document.getElementById("container-userinfo");
+    userinfo.style.display = 'block';
+    show_userinfo();
+}
+
+
+function Close_userinfo(){
+    const userinfo = document.getElementById("container-userinfo");
+    userinfo.style.display = 'none';
 }
 
 // create room
@@ -672,6 +695,14 @@ function leaveRoom(event) {
         ref_gameRoom.child(join_room_num).child('Player').child('Player_2_Status').remove();
         ref_gameRoom.child(join_room_num).child('Player').child('Player_2_UID').remove();
     }
+    Open_homepage();
+}
+//Return to Homepage
+document.querySelectorAll('.btn-home').forEach((btn) => {
+    btn.addEventListener('click', leaveLobby);
+});
+
+function returnHomepage(){
     Open_homepage();
 }
 
@@ -1678,10 +1709,79 @@ btn_ranking.addEventListener('click', ranking);
 
 function ranking() {
     Open_ranking();
+    rankingTable();
+}
+
+//User Info
+const btn_info = document.getElementById('btn-info');
+btn_info.addEventListener('click', userinfo);
+
+function userinfo(){
+    Open_userinfo()
+}
+
+
+
+function show_userinfo(){
+    ref_userProfile.once('value', userData => {
+        let totalPlay = userData.child(userUID).child('total-play').val();
+        let win = userData.child(userUID).child('win').val();
+        let winRate = ((win / totalPlay) * 100).toFixed(2);
+        console.log(userPhoto.replace("/s96-c/","/s300-c/"))
+        document.getElementById('info-userpic').src = userPhoto.replace("s96-c","s300-c");
+        document.getElementById('info-username').innerHTML = 'Username : ' + userName;
+        document.getElementById('info-winRate').innerHTML = 'Win Rate : ' + winRate + '%';
+        document.getElementById('info-totalWin').innerHTML = 'Win : ' + win;
+        document.getElementById('info-totalGame').innerHTML = 'Total Games : ' + totalPlay + ' Game';
+    });
+}
+
+function rankingTable(){
+    var rank = new Array();
+    ref_userProfile.once('value', userData => {
+        document.getElementById("ranking-table").innerHTML = '';
+            userData.forEach(uid => {
+                if (uid.child('total-play').exists()) {
+                    if(uid.child('total-play').val() > 0){
+                        let win = uid.child("win").val();
+                        let totalPlay = uid.child("total-play").val();
+                        let playerName = uid.child("Username").val();
+                        let winRate = ((win / totalPlay) * 100).toFixed(2);
+                        rank.push({playerName, winRate});
+                        
+                    }                               
+                }
+            });
+
+            rank.sort(function (a, b) {
+                return b.winRate - a.winRate;
+              });
+
+            var temp_count = 1;
+            try{
+            rank.forEach(order => {
+                let template = document.createElement('template');
+                        template.innerHTML = `<tr style="color: azure;">
+                                                <th scope="row">${temp_count}</th>
+                                                <td>${order.playerName}</td>
+                                                <td>${order.winRate}</td>
+                                            </tr>`;
+                        let frag = template.content;
+                        document.getElementById("ranking-table").appendChild(frag);
+                        temp_count += 1;
+                if(temp_count > 10){
+                    throw 'Break';
+                }
+            });
+            } catch (e){
+                if (e !== 'Break') throw e
+            }
+    });
 }
 
 // set user value
 firebase.auth().onAuthStateChanged((user) => {
+    
     if (user) {
         console.log(user.displayName);
         userName = user.displayName;
@@ -1690,6 +1790,7 @@ firebase.auth().onAuthStateChanged((user) => {
         const todayDate = new Date();
         ref_userProfile.child(user.uid).update({
             ['LastLogInDate']: todayDate,
+            ['Username']: userName,
         });
         ref_userProfile.once('value', userData => {
             if (!userData.child(user.uid).child('total-play').exists()) {

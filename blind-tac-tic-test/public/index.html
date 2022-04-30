@@ -22,7 +22,7 @@
         <div class="container-fluid">
             <img src="https://i.ibb.co/5LfgmQM/vadim-bogulov-In9-Tha9-Hu4-unsplash-removebg-preview.png" alt="vadim-bogulov-In9-Tha9-Hu4-unsplash-removebg-preview" border="0" width="60" height="50" class="d-inline-block
                     align-text-top">
-            <a class="navbar-brand text-white" href="#">Blind Tac Tic</a>
+            <a class="navbar-brand text-white btn-home" href="#">Blind Tac Tic</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -31,11 +31,11 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <span>
                     <img id="user-pic" class="display-pic logged-in" style="width:10%; border-radius: 50%;">
-                    <span id="user-profile-name" class="display-name logged-in" style="color: white;"></span>
+                    <a id="btn-info" style="cursor: pointer;"><span id="user-profile-name" class="display-name logged-in" style="color: white;"></span></a>
                 </span>
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-white-50" href="#">Account</a>
+                        <button id="btn-info" class="btn btn-dark"></button>
                     </li>
                 </ul>
                 <div class="d-flex">
@@ -521,58 +521,7 @@
                             <th scope="col">Win Rate</th>
                         </tr>
                     </thead>
-                    <tbody style="color: #0C1845;">
-                        <tr style="color: azure;">
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>10</td>
-                        </tr>
-                        <tr style="color: azure;">
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>9</td>
-                        </tr>
-                        <tr style="color: azure;">
-                            <th scope="row">3</th>
-                            <td>Larry the Bird</td>
-                            <td>8</td>
-                        </tr>
-                        <tr style="color: azure;">
-                            <th scope="row">4</th>
-                            <td>wfangst</td>
-                            <td>7</td>
-                        </tr>
-                        <tr style="color: azure;">
-                            <th scope="row">5</th>
-                            <td>big</td>
-                            <td>6</td>
-                        </tr>
-                        <tr style="color: azure;">
-                            <th scope="row">6</th>
-                            <td>ton</td>
-                            <td>5</td>
-                        </tr>
-                        <tr style="color: azure;">
-                            <th scope="row">7</th>
-                            <td>supapit</td>
-                            <td>4</td>
-                        </tr>
-                        <tr style="color: azure;">
-                            <th scope="row">8</th>
-                            <td>Thanayut Kunsun</td>
-                            <td>3</td>
-                        </tr>
-                        <tr style="color: azure;">
-                            <th scope="row">9</th>
-                            <td>shoei</td>
-                            <td>2</td>
-                        </tr>
-                        <tr style="color: azure;">
-                            <th scope="row">10</th>
-                            <td>Pob Chang</td>
-                            <td>1</td>
-                        </tr>
-                    </tbody>
+                    <tbody id="ranking-table" style="color: #0C1845;"></tbody>
                 </table>
             </div>
         </div>
@@ -641,6 +590,32 @@
             </div>
         </div>
         <!-- /how to -->
+
+        <!-- User Info -->
+        <div id="container-userinfo">
+            <div class="container">
+                <div class="col-md-6 col-12 d-flex justify-content-end align-items-center">
+                    <button type="button" class="btn btn-dark btn-leave-room">Leave Room</button>
+                </div>
+                <div class="card d-flex mb-6 mx-5 my-5 justify-content-center" style="background-color: #4c007036; color: aliceblue;">
+                    <div class="row g-0">
+                      <div class="col-md-4 ">
+                        <img id="info-userpic" class="img-fluid rounded-start" style="width: 100%;" alt="UserPic">
+                      </div>
+                      <div class="col-md-8 d-flex justify-content-between">
+                        <div class="card-body">
+                          <h1 id="info-username"></h1>
+                          <h1 id="info-totalGame"></h1>
+                          <h1 id="info-totalWin"></h1>
+                          <h1 id="info-winRate"></h1>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <!-- /User Info -->
     </div>
 
     <!-- init -->
