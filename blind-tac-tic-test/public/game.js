@@ -242,7 +242,6 @@ function readRoomList() {
                         <button class='btn btn-success btn-join-room-public' id='${room_Num}' type="button" >JOIN</button>
                     </td>
                 </tr>`;
-                join_room_num = room_Num;
             } else {
                 template.innerHTML = `<tr>
                     <th scope='row' class='align-middle'>${room_Num}</th>
@@ -251,11 +250,9 @@ function readRoomList() {
                     <td class='align-middle'>${roomType}</td>
                     <td class='align-middle'>
                         <button class='btn btn-success btn-join-room-private' id='${room_Num}' type="button" data-bs-toggle="modal"
-                        data-bs-target="#modal-join-private">JOIN</button>
+                        data-bs-target="#modal-join-private" onclick=set_wanttojoinroomNum('${room_Num}')>JOIN</button>
                     </td>
                 </tr>`;
-                document.querySelector("#modal-join-private-title").innerText = "Join Private Room : " + roomName;
-                want_to_join_room_Num = room_Num;
             }
             let frag = template.content;
             document.getElementById("room-list").appendChild(frag);
@@ -271,12 +268,14 @@ function readRoomList() {
 var isRoomFull = false;
 
 function check_P2_space(event) {
+    isRoomFull = false;
     const room_Num = event.currentTarget.getAttribute('id');
     ref_gameRoom.child(room_Num).once('value', snapshot => {
         if (snapshot.child('Player').child('Player_2_Name').exists()) {
             isRoomFull = true;
         }
     });
+    join_room_num = '0';
     joinRoom(room_Num);
 }
 
@@ -381,6 +380,9 @@ var want_to_join_room_Num = '0';
 const formJoinWithCode = document.querySelector('#form-join-with-code');
 formJoinWithCode.addEventListener('submit', checkJoinCode);
 var is_join_complete = false;
+function set_wanttojoinroomNum(roomNum){
+    want_to_join_room_Num = roomNum;
+}
 
 function checkJoinCode(event) {
     event.preventDefault();
@@ -388,6 +390,7 @@ function checkJoinCode(event) {
         case 'form-join-with-code':
             ref_gameRoom.once('value', snapshot => {
                 snapshot.forEach(room => {
+                    join_room_num = '0';
                     if (room.child('RoomID').val() == formJoinWithCode['input-room-code'].value) {
                         if (!room.child('Player').child('Player_2_Name').exists()) {
                             is_join_complete = true;
@@ -403,6 +406,8 @@ function checkJoinCode(event) {
             break;
         case 'join-private-room-form':
             ref_gameRoom.child(want_to_join_room_Num).once('value', snapshot => {
+                document.querySelector("#modal-join-private-title").innerText = "Join Private Room : " + snapshot.child('roomName').val();
+                join_room_num = '0';
                 if (snapshot.child('RoomID').val() == joinPrivateRoomForm['join-private-room-input'].value) {
                     if (!snapshot.child('Player').child('Player_2_Name').exists()) {
                         is_join_complete = true;
@@ -687,6 +692,7 @@ function leaveRoom(event) {
     if (host_room_Num != '0') {
         ref_gameRoom.child(host_room_Num).off('value');
         ref_gameRoom.child(host_room_Num).remove();
+        console.log('host_room_Num = '+host_room_Num);
         host_room_Num = '0';
     } else if (join_room_num != '0') {
         ref_gameRoom.child(join_room_num).off('value');
@@ -694,6 +700,8 @@ function leaveRoom(event) {
         ref_gameRoom.child(join_room_num).child('Player').child('Player_2_Name').remove();
         ref_gameRoom.child(join_room_num).child('Player').child('Player_2_Status').remove();
         ref_gameRoom.child(join_room_num).child('Player').child('Player_2_UID').remove();
+        console.log('join_room_num = '+join_room_num);
+        join_room_num = '0';
     }
     Open_homepage();
 }
