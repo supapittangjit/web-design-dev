@@ -524,6 +524,8 @@ function hostJoinRoom(room_Num) {
     console.log(room_Num);
     Open_room();
     host_room_Num = room_Num;
+    document.getElementById('public').disabled = false;
+    document.getElementById('private').disabled = false;
     ref_gameRoom.child(room_Num).child('Player').update({
         ['Player_1_Photo']: userPhoto,
         ['Player_1_Name']: userName,
