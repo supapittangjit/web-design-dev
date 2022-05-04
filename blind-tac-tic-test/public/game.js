@@ -1783,15 +1783,15 @@ function rankingTable(){
                         let win = uid.child("win").val();
                         let totalPlay = uid.child("total-play").val();
                         let playerName = uid.child("Username").val();
-                        let winRate = ((win / totalPlay) * 100).toFixed(2);
-                        rank.push({playerName, winRate});
+                        let winRate = ((win / totalPlay) * 100).toFixed(0);
+                        rank.push({playerName, win, winRate});
                         
                     }                               
                 }
             });
 
             rank.sort(function (a, b) {
-                return b.winRate - a.winRate;
+                return b.win - a.win;
               });
 
             var temp_count = 1;
@@ -1801,7 +1801,8 @@ function rankingTable(){
                         template.innerHTML = `<tr style="color: azure;">
                                                 <th scope="row">${temp_count}</th>
                                                 <td>${order.playerName}</td>
-                                                <td>${order.winRate}</td>
+                                                <td>${order.win}</td>
+                                                <td>${order.winRate}%</td>
                                             </tr>`;
                         let frag = template.content;
                         document.getElementById("ranking-table").appendChild(frag);
