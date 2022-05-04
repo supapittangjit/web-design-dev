@@ -1839,6 +1839,12 @@ firebase.auth().onAuthStateChanged((user) => {
                 });
             }
         });
+        if(user.photoURL){
+            userPhoto = user.photoURL;
+        }else{
+            userPhoto = 'default-user-photo.jpg';
+        }
+
     }
 });
 
