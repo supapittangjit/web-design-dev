@@ -2162,7 +2162,7 @@ main {
     color: inherit
 }
 
-.col-layer-symbol{
+.col-layer-symbol {
     display: block;
     position: relative;
     left: 0px;
@@ -2174,7 +2174,7 @@ main {
     z-index: 1;
 }
 
-.col-layer-help{
+.col-layer-help {
     display: block;
     position: relative;
     top: -10vw;
@@ -2184,4 +2184,16 @@ main {
     height: 10vw;
     z-index: 2;
     opacity: 50%;
+}
+
+@media only screen and (max-width: 1320px) {
+    .game-margin {
+        padding: 0 5rem !important;
+    }
+}
+
+@media only screen and (min-width: 1320px) {
+    .game-margin {
+        padding: 0 10rem !important;
+    }
 }
