@@ -50,6 +50,7 @@ function Open_homepage() {
     Close_howtoplay();
     Close_userinfo();
     addEventListener_to_btn_info();
+    addEventListener_to_btn_home();
     join_room_num = '0';
     host_room_Num = '0';
 }
@@ -70,6 +71,7 @@ function Open_lobby() {
     Close_howtoplay();
     Close_userinfo();
     addEventListener_to_btn_info();
+    addEventListener_to_btn_home();
 }
 
 function Close_room() {
@@ -91,6 +93,7 @@ function Open_room() {
     Close_howtoplay();
     Close_userinfo();
     removeEventListener_to_btn_info();
+    removeEventListener_to_btn_home();
 }
 
 function Close_game_table() {
@@ -121,6 +124,7 @@ function Open_ranking() {
     Close_howtoplay();
     Close_userinfo();
     addEventListener_to_btn_info();
+    addEventListener_to_btn_home();
     const container_ranking = document.getElementById('container-ranking');
     container_ranking.style.display = 'block';
 }
@@ -138,6 +142,7 @@ function Open_howtoplay() {
     Close_ranking();
     Close_userinfo();
     addEventListener_to_btn_info();
+    addEventListener_to_btn_home();
     const container_howtoplay = document.getElementById('container-howtoplay');
     container_howtoplay.style.display = 'block';
 }
@@ -154,6 +159,7 @@ function Open_userinfo(){
     Close_game_table();
     Close_howtoplay();
     addEventListener_to_btn_info();
+    addEventListener_to_btn_home();
     const userinfo = document.getElementById("container-userinfo");
     userinfo.style.display = 'block';
     show_userinfo();
@@ -1741,6 +1747,16 @@ function addEventListener_to_btn_info(){
 function removeEventListener_to_btn_info(){
     const btn_info = document.getElementById('btn-info');
     btn_info.removeEventListener('click', userinfo);
+}
+
+function addEventListener_to_btn_home(){
+    const btn_home = document.getElementById('btn-home');
+    btn_home.addEventListener('click', Open_homepage);
+}
+
+function removeEventListener_to_btn_home(){
+    const btn_home = document.getElementById('btn-home');
+    btn_home.removeEventListener('click', Open_homepage);
 }
 
 function show_userinfo(){
