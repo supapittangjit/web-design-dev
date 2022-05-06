@@ -1819,7 +1819,6 @@ function rankingTable(){
 
 // set user value
 firebase.auth().onAuthStateChanged((user) => {
-    
     if (user) {
         console.log(user.displayName);
         userName = user.displayName;

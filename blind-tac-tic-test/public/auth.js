@@ -31,7 +31,6 @@ const loginItems = document.querySelectorAll('.logged-in');
 
 function setupUI(user) {
     if (user) {
-        document.querySelector('#user-profile-name').innerHTML = username;
         document.querySelector('#user-profile-name').style.display = 'inline-block';
         document.querySelector('#user-pic').style.display = 'inline-block';
         loginItems.forEach(item => item.style.display = 'inline-flex');
@@ -41,6 +40,13 @@ function setupUI(user) {
         }
         else{
             document.querySelector('#user-pic').src = 'default-user-photo.jpg'
+        }
+
+        if(user.displayName == null){
+            document.querySelector('#user-profile-name').innerText = username;
+        }
+        else{
+            document.querySelector('#user-profile-name').innerText = user.displayName;
         }
         
     } else {
@@ -92,7 +98,6 @@ function createUser(event) {
             signupFeedback.innerText = `${error.message}`;
             signupForm.reset();
         });
-        setupUI();
 }
 
 
@@ -138,6 +143,6 @@ function loginUser(event) {
 }
 
 firebase.auth().onAuthStateChanged((user) => {
-    console.log('User: ', user)
-    setupUI(user)
-})
+    console.log('User: ', user);
+    setupUI(user);
+});
